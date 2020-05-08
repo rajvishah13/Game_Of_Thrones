@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 const displayRoutes = require('./routes/display');
 
 app.use('/display', displayRoutes);
-app.get('/', function(req, res){
+app.get('*', function(req, res){
    res.redirect('/display');
 });
 
