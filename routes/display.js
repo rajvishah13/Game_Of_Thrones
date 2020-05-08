@@ -15,7 +15,7 @@ router.get('/', async (req,res) => {
 });
 
 //ADDS A BATTLE
-router.post('/', async (req,res) =>{
+router.post('/post', async (req,res) =>{
     const battle = new Battles({
         name: req.body.name,
         year: req.body.year,
