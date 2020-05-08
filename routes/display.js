@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Battles = require('../models/Battle');
-const asyncc = require('async');
 
 //GETS ALL THE BATTLES
 router.get('/', async (req,res) => {
@@ -72,9 +71,9 @@ router.delete('/delete/:battleID', async(req,res) =>{
     }
 });
 
-//LIST OF BATTLES
-router.get('/locations', (req, res) =>{
-	Battles.distinct("location",  {'location': {"$exists": true, "$type": 2, "$ne": ""} }, (err, locations)=>{
+//LIST OF BATTLESy 
+router.get('/locations', async (req, res) =>{
+	await Battles.distinct("location",  {'location': {"$exists": true, "$type": 2, "$ne": ""} }, (err, locations)=>{
         if (err) {
           res.send(err);
       }
@@ -83,8 +82,8 @@ router.get('/locations', (req, res) =>{
 });
 
 //COUNT TOTAL NUMBER OF BATTLES
-router.get('/count', (req, res) => {
-	Battles.countDocuments((err, count)=>{
+router.get('/count', async (req, res) => {
+	await Battles.countDocuments((err, count)=>{
         if (err) {
           res.send(err);
       }
@@ -93,7 +92,7 @@ router.get('/count', (req, res) => {
 });
 
 //SEARCH QUERIES WITH LOCATION, ATTACKER KING/DEFENDER KING , TYPE OF BATTLE
-router.get('/search', (req,res) => {
+router.get('/search', async(req,res) => {
     console.log('req query', req.query);
 	let query = {
 	    $and : [
@@ -101,7 +100,7 @@ router.get('/search', (req,res) => {
 		  { location: req.query.location, battle_type: req.query.type }
 	    ]
 	};
-	Battles.find(query, '-__v').exec().then(response => {
+	await Battles.find(query, '-__v').exec().then(response => {
 	    res.send({
 		  code: 1,
 		  data: response
@@ -111,7 +110,7 @@ router.get('/search', (req,res) => {
 
 //STATS
 router.get('/stats', async(req,res) => {
-    Battles.find({}, 'attacker_king defender_king region attacker_outcome battle_type defender_size -_id').exec().then(response => {
+    await Battles.find({}, 'attacker_king defender_king region attacker_outcome battle_type defender_size -_id').exec().then(response => {
 		if (response.length > 0) {
 		    let statics = Stats(response);
 
