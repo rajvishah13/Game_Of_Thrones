@@ -73,7 +73,7 @@ router.delete('/delete/:battleID', async(req,res) =>{
 });
 
 //LIST OF BATTLES
-router.get('/locations', async(req, res) =>{
+router.get('/locations', (req, res) =>{
 	Battles.distinct("location",  {'location': {"$exists": true, "$type": 2, "$ne": ""} }, (err, locations)=>{
         if (err) {
           res.send(err);
@@ -83,7 +83,7 @@ router.get('/locations', async(req, res) =>{
 });
 
 //COUNT TOTAL NUMBER OF BATTLES
-router.get('/count', async(req, res) => {
+router.get('/count', (req, res) => {
 	Battles.countDocuments((err, count)=>{
         if (err) {
           res.send(err);
@@ -93,7 +93,7 @@ router.get('/count', async(req, res) => {
 });
 
 //SEARCH QUERIES WITH LOCATION, ATTACKER KING/DEFENDER KING , TYPE OF BATTLE
-router.get('/search', async(req,res) => {
+router.get('/search', (req,res) => {
     console.log('req query', req.query);
 	let query = {
 	    $and : [
