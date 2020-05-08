@@ -11,7 +11,10 @@ app.use(bodyParser.json());
 //Import Routes
 const displayRoutes = require('./routes/display');
 
-app.use('/', displayRoutes);
+app.use('/display', displayRoutes);
+app.get('/', function(req, res){
+   res.redirect('/display');
+});
 
 //Connect to DB
 mongoose.connect('mongodb://localhost:27017/battles', 
