@@ -1,5 +1,5 @@
 # Game_Of_Thrones
-A full stack assignment built using Rest API, MongoDB and Node.js
+A back-end web development assignment built using Rest API, MongoDB and Node.js
 
 Tools needed to run and test app
 Nodejs, npm, express, nodemon
